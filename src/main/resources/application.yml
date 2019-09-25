@@ -1,0 +1,97 @@
+#http://localhost:8081/swagger-ui.html 在线接口文档
+#http://localhost:8081/druid/index.html 数据源监控
+server:
+  port: 8081
+
+#配置日志
+logging:
+  #配置日志文件路径
+  level:
+    xatu.zsl: debug #不同目录下的日志可配置不同级别
+    org.springfromework.web: info
+    org.hibernate: error
+  #采用相对路径方式将日志文件输出到【mylog\myspringboot.log】
+  file: D:\mylog\myspringboot.log
+
+spring:
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
+  ## 视图解析器 ##
+  mvc:
+    view:
+      prefix: /pages/
+      suffix: .html
+  datasource:
+    druid:
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        session-stat-enable: true
+        session-stat-max-count: 10
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+    dynamic:
+      ############# 默认false,建议线上关闭  #################
+      p6spy: true
+      ############# Druid 连接池配置  #################
+      druid:
+        initial-size: 1
+        ### 最大的活跃连接数 ####
+        max-active: 20
+        #### 指定必须保持连接的最小值 ####
+        min-idle: 3
+        #### 测试SQL ###
+        validation-query: SELECT 'x' FROM DUAL
+        #### 超时等待时间 ####
+        max-wait: 60000
+        ####  配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 ####
+        time-between-eviction-runs-millis: 60000
+        ##### 指定一个空闲连接最少空闲多久后可被清除，单位是毫秒 #####
+        min-evictable-idle-time-millis: 300000
+        ##### 当连接空闲时，是否执行连接测试. #######
+        test-while-idle: true
+        ###### 当从连接池借用连接时，是否测试该连接. ####
+        test-on-borrow: false
+        ####### 在连接归还到连接池时是否测试该连接 #######
+        test-on-return: false
+        #######  配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙   #######
+        #####   监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall #######
+        filters: stat,log4j
+        ############### 以下是监控的配置，不做过多说明，详细配置请找度娘 ##########
+      primary: master_1
+      datasource:
+        master_1:
+          ############  JDBC 配置  ###################
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+#          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          username: root
+          password: mhp2g007
+          url: jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+#          url: jdbc:p6spy:mysql://localhost:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+        master_2:
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: mhp2g007
+          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+        master_3:
+#          type: com.alibaba.druid.pool.DruidDataSource
+#          driver-class-name: oracle.jdbc.driver.OracleDriver
+#          username: ntys
+#          password: ntys
+#          url: jdbc:oracle:thin:@192.168.135.129:1521:sjq
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: mhp2g007
+          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+
