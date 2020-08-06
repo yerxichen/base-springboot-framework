@@ -1,7 +1,7 @@
 #http://localhost:8081/swagger-ui.html 在线接口文档
 #http://localhost:8081/druid/index.html 数据源监控
 server:
-  port: 8081
+  port: 18081
 
 #配置日志
 logging:
@@ -74,24 +74,24 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
 #          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
           username: root
-          password: mhp2g007
-          url: jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+          password: 123456
+          url: jdbc:mysql://192.168.56.128:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
 #          url: jdbc:p6spy:mysql://localhost:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
-        master_2:
-          type: com.alibaba.druid.pool.DruidDataSource
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: root
-          password: mhp2g007
-          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
-        master_3:
+#        master_2:
+#          type: com.alibaba.druid.pool.DruidDataSource
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          username: root
+#          password: mhp2g007
+#          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+#        master_3:
 #          type: com.alibaba.druid.pool.DruidDataSource
 #          driver-class-name: oracle.jdbc.driver.OracleDriver
 #          username: ntys
 #          password: ntys
 #          url: jdbc:oracle:thin:@192.168.135.129:1521:sjq
-          type: com.alibaba.druid.pool.DruidDataSource
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: root
-          password: mhp2g007
-          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+#          type: com.alibaba.druid.pool.DruidDataSource
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          username: root
+#          password: mhp2g007
+#          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
 
