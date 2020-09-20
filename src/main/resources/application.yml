@@ -1,5 +1,6 @@
 #http://localhost:8081/swagger-ui.html 在线接口文档
 #http://localhost:8081/druid/index.html 数据源监控
+
 server:
   port: 8081
 
@@ -11,9 +12,12 @@ logging:
     org.springfromework.web: info
     org.hibernate: error
   #采用相对路径方式将日志文件输出到【mylog\myspringboot.log】
-  file: D:\mylog\myspringboot.log
+  file:
+    path: log\mylog
 
 spring:
+  application:
+    name: base-springboot
   devtools:
     restart:
       enabled: true  #设置开启热部署
@@ -39,6 +43,8 @@ spring:
         login-username: admin
         login-password: admin
     dynamic:
+      seata: true    #开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭
+      seata-mode: AT #支持XA及AT模式,默认AT
       ############# 默认false,建议线上关闭  #################
       p6spy: true
       ############# Druid 连接池配置  #################
@@ -74,24 +80,29 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
 #          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
           username: root
-          password: mhp2g007
+          password: root
           url: jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
 #          url: jdbc:p6spy:mysql://localhost:3306/mydb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
         master_2:
           type: com.alibaba.druid.pool.DruidDataSource
           driver-class-name: com.mysql.cj.jdbc.Driver
           username: root
-          password: mhp2g007
-          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
-        master_3:
-#          type: com.alibaba.druid.pool.DruidDataSource
-#          driver-class-name: oracle.jdbc.driver.OracleDriver
-#          username: ntys
-#          password: ntys
-#          url: jdbc:oracle:thin:@192.168.135.129:1521:sjq
-          type: com.alibaba.druid.pool.DruidDataSource
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: root
-          password: mhp2g007
-          url: jdbc:mysql://localhost:3306/fms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
-
+          password: root
+          url: jdbc:mysql://localhost:3306/mydb2?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: seata-group
+  #一定要是false
+  enable-auto-data-source-proxy: false
+  service:
+    vgroup-mapping:
+      #key与上面的tx-service-group的值对应
+      seata-group: default
+    grouplist:
+      #seata-server地址仅file注册中心需要
+      default: 127.0.0.1:8091
+  config:
+    type: file
+  registry:
+    type: file
